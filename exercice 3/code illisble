@@ -1,0 +1,35 @@
+function analyzePurchases(purchases, threshold) {
+    const filteredPurchases = purchases.filter(item => item.p > threshold);
+
+    const prices = filteredPurchases.map(item => item.p);
+    const averagePrice = calculateAverage(prices);
+
+    const categories = filteredPurchases.map(item => item.c);
+    const mostFrequentCategory = findMostFrequentCategory(categories);
+
+    console.log("Moyenne des prix :", averagePrice);
+    console.log("Catégorie la plus fréquente :", mostFrequentCategory);
+}
+
+
+function calculateAverage(numbers) {
+    if (numbers.length === 0) return 0;
+    const total = numbers.reduce((sum, value) => sum + value, 0);
+    return total / numbers.length;
+}
+
+function findMostFrequentCategory(categories) {
+    const counts = {};
+    for (const category of categories) {
+        counts[category] = (counts[category] || 0) + 1;
+    }
+    let mostFrequent = null;
+    let maxCount = 0;
+    for (const [category, count] of Object.entries(counts)) {
+        if (count > maxCount) {
+            maxCount = count;
+            mostFrequent = category;
+        }
+    }
+    return mostFrequent;
+}

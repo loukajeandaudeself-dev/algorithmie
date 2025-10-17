@@ -1,0 +1,28 @@
+function ShufflePlayer(players) {
+    for (let i = players.length - 1; i >= 1; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [players[i], players[j]] = [players[j], players[i]];
+    }
+    return players;
+}
+
+function tournament_liste(players) {
+    const shuffled = ShufflePlayer([...players]);
+    const pairs = [];
+    let exempt = null;
+
+    if (shuffled.length % 2 !== 0) {
+        exempt = shuffled.pop();
+    }
+
+    for (let i = 0; i < shuffled.length; i += 2) {
+        pairs.push([shuffled[i], shuffled[i + 1]]);
+    }
+
+    if (exempt) pairs.push({ exempt });
+    return pairs;
+}
+
+const players = ["Alice", "Bob", "Charlie", "David", "Eve", "Frank"];
+let matcharray = tournament_liste(players);
+console.log(matcharray);
